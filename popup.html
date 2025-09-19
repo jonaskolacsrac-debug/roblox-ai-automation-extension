@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox AI Automation</title>
+  <style>
+    body {
+      width: 350px;
+      min-height: 500px;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .header {
+      padding: 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      margin: 5px 0 0 0;
+      opacity: 0.8;
+      font-size: 12px;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .status-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff4757;
+      animation: pulse 2s infinite;
+    }
+    
+    .status-dot.active {
+      background: #2ed573;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .strategy-selector {
+      margin-bottom: 15px;
+    }
+    
+    .strategy-selector label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .strategy-selector select {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 14px;
+    }
+    
+    .strategy-selector select option {
+      background: #333;
+      color: white;
+    }
+    
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-primary {
+      background: #2ed573;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #26d467;
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger {
+      background: #ff4757;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #ff3838;
+      transform: translateY(-2px);
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .metric {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    
+    .metric-label {
+      font-size: 11px;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .footer {
+      padding: 15px 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      font-size: 11px;
+      opacity: 0.7;
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🤖 Roblox AI Automation</h1>
+    <p>Autonomous Gaming Assistant</p>
+  </div>
+  
+  <div class="content">
+    <div class="status-card">
+      <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Inactive</span>
+      </div>
+      <div id="currentStrategy">Strategy: None</div>
+    </div>
+    
+    <div class="controls">
+      <div class="strategy-selector">
+        <label for="strategySelect">AI Strategy:</label>
+        <select id="strategySelect">
+          <option value="exploration">🗺️ Exploration</option>
+          <option value="collection">💎 Item Collection</option>
+          <option value="combat">⚔️ Combat</option>
+          <option value="questing">📋 Quest Completion</option>
+        </select>
+      </div>
+      
+      <button id="startBtn" class="btn btn-primary">Start AI Automation</button>
+      <button id="stopBtn" class="btn btn-danger" disabled>Stop Automation</button>
+    </div>
+    
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value" id="actionsPerMin">0</div>
+        <div class="metric-label">Actions/Min</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="successRate">0%</div>
+        <div class="metric-label">Success Rate</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="totalActions">0</div>
+        <div class="metric-label">Total Actions</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="uptime">0s</div>
+        <div class="metric-label">Uptime</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <a href="options.html" target="_blank">⚙️ Settings</a> | 
+    <a href="https://puzzlesolver.altanlabs.com" target="_blank">🌐 Dashboard</a>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
