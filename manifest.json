@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Roblox AI Automation",
+  "version": "1.0.0",
+  "description": "AI-powered automation for Roblox games with computer vision and autonomous control",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "desktopCapture",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.roblox.com/*",
+    "https://*.roblox.com/*",
+    "https://puzzlesolver.altanlabs.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.roblox.com/*", "https://*.roblox.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Roblox AI Automation",
+    "default_icon": {
+      "16": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iNCIgZmlsbD0iIzAwN0FGRiIvPgo8cGF0aCBkPSJNOCA0QzYuODk1IDQgNiA0Ljg5NSA2IDZWMTBDNSA5LjEwNSA1IDggNiA4SDEwQzExLjEwNSA4IDEyIDguODk1IDEyIDEwVjZDMTIgNC44OTUgMTEuMTA1IDQgMTAgNEg4WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+"
+    }
+  },
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://www.roblox.com/*", "https://*.roblox.com/*"]
+    }
+  ]
+}
