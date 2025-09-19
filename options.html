@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox AI Automation - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    .settings-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e1e8ed;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .form-group input[type="range"] {
+      padding: 0;
+      height: 6px;
+      background: #e1e8ed;
+      border-radius: 3px;
+    }
+    
+    .range-value {
+      display: inline-block;
+      margin-left: 10px;
+      font-weight: 600;
+      color: #667eea;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #5a6fd8;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: #f1f3f4;
+      color: #333;
+      margin-left: 10px;
+    }
+    
+    .btn-secondary:hover {
+      background: #e8eaed;
+    }
+    
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .info-box {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+    
+    .info-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #6c757d;
+    }
+    
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 Roblox AI Automation</h1>
+      <p>Configure your AI gaming assistant settings</p>
+    </div>
+    
+    <div class="settings-card">
+      <div class="section">
+        <h2 class="section-title">🎮 Automation Settings</h2>
+        
+        <div class="form-group">
+          <label for="defaultStrategy">Default Strategy:</label>
+          <select id="defaultStrategy">
+            <option value="exploration">🗺️ Exploration</option>
+            <option value="collection">💎 Item Collection</option>
+            <option value="combat">⚔️ Combat</option>
+            <option value="questing">📋 Quest Completion</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="actionDelay">Action Delay (ms): <span class="range-value" id="actionDelayValue">200</span></label>
+          <input type="range" id="actionDelay" min="50" max="1000" value="200" step="50">
+        </div>
+        
+        <div class="form-group">
+          <label for="confidenceThreshold">Confidence Threshold (%): <span class="range-value" id="confidenceValue">75</span></label>
+          <input type="range" id="confidenceThreshold" min="50" max="95" value="75" step="5">
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2 class="section-title">🛡️ Safety Settings</h2>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="safetyMode" checked>
+            <label for="safetyMode">Enable Safety Mode (prevents risky actions)</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="humanLikeMovement" checked>
+            <label for="humanLikeMovement">Human-like Movement Patterns</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="antiDetection" checked>
+            <label for="antiDetection">Anti-Detection Measures</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="maxSessionTime">Max Session Time (minutes):</label>
+          <input type="number" id="maxSessionTime" min="5" max="180" value="60">
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2 class="section-title">👁️ Vision Settings</h2>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="enableVision" checked>
+            <label for="enableVision">Enable Computer Vision</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="visionFPS">Vision Processing FPS: <span class="range-value" id="visionFPSValue">10</span></label>
+          <input type="range" id="visionFPS" min="5" max="30" value="10" step="5">
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="showOverlay" checked>
+            <label for="showOverlay">Show Detection Overlay</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2 class="section-title">📊 Performance Settings</h2>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="enableMetrics" checked>
+            <label for="enableMetrics">Enable Performance Metrics</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="enableLogging" checked>
+            <label for="enableLogging">Enable Debug Logging</label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="memoryLimit">Memory Limit (MB):</label>
+          <input type="number" id="memoryLimit" min="100" max="1000" value="500">
+        </div>
+      </div>
+      
+      <div class="info-box">
+        <p><strong>Note:</strong> Changes are automatically saved. Restart the automation for new settings to take effect.</p>
+      </div>
+      
+      <div class="success-message" id="successMessage">
+        ✅ Settings saved successfully!
+      </div>
+      
+      <div class="actions">
+        <button id="saveBtn" class="btn btn-primary">Save Settings</button>
+        <button id="resetBtn" class="btn btn-secondary">Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>
